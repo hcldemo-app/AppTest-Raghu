@@ -17,14 +17,14 @@ steps:
   displayName: 'dotnet build $(buildConfiguration)'
 
 - task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-    SourceFolder: '$(Build.SourcesDirectory)'
-    Contents: |
-     **/*
-     !.git/**/*
-    TargetFolder: '$(Build.ArtifactStagingDirectory)'
-- task: PublishBuildArtifacts@1    
-  displayName: 'Publish Artifact: drop'
+  displayName: 'Copy deployment content'
+  inputs: 
+    SourceFolder: '$(Build.SourcesDirectory)/deployment'
+    contents: '**\*' 
+    targetFolder: $(Build.ArtifactStagingDirectory)/deployment
+    cleanTargetFolder: true
+
+- task: PublishBuildArtifacts@1
+  displayName: 'Publish Artifact'
   inputs:
     PathtoPublish: '$(build.artifactstagingdirectory)'
